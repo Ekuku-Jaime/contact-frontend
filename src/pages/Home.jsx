@@ -4,7 +4,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Contact from "../components/Contact";
 import ContactForm from "../components/ContactForm";
-import { data } from "../data";
 import { ContactContextProvider } from "../state/context";
 
 export default function Home() {
@@ -12,6 +11,7 @@ export default function Home() {
 
   const getContacts = async () => {
     try {
+      //change this with your url
       const response = await axios.get(
         "http://127.0.0.1:8000/api/v1/contacts/"
       );

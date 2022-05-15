@@ -2,17 +2,11 @@ import styled from "@emotion/styled";
 import { Delete, Edit } from "@mui/icons-material";
 import { Card, IconButton, Tooltip } from "@mui/material";
 import axios from "axios";
-import React, { createContext, useContext, useEffect, useState } from "react";
-// import { data } from "../data";
+import React, { useContext } from "react";
 import { ContactContext } from "../state/context";
 
-// const changeContact = () => {
-
-// };
-
 export default function Contact({ contacto }) {
-  const { name, setName, number, setNumber, id, setId, edit, setEdit } =
-    useContext(ContactContext);
+  const { setName, setNumber, setId, setEdit } = useContext(ContactContext);
 
   const changeName = (name) => {
     setName(name);
@@ -28,6 +22,7 @@ export default function Contact({ contacto }) {
   };
   const deleteContact = async (id) => {
     try {
+      //change this with your url
       await axios.delete(`http://127.0.0.1:8000/api/v1/contacts/${id}/`);
     } catch (err) {
       console.log(err);

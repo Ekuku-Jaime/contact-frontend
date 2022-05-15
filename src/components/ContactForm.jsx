@@ -2,16 +2,16 @@ import { Stack, TextField } from "@mui/material";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
 import { LoadingButton } from "@mui/lab";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { ContactContext } from "../state/context";
 import axios from "axios";
 
 export default function ContactForm() {
   const { name, number, edit, id } = useContext(ContactContext);
-  // const [context, setContext] = useState({ name: "", number: 7 });
   const addContact = async (values) => {
     try {
       const response = await axios.post(
+        //change this with your url
         "http://127.0.0.1:8000/api/v1/contacts/",
         values
       );
@@ -21,10 +21,8 @@ export default function ContactForm() {
   };
   const editContact = async (id, values) => {
     try {
-      const response = await axios.put(
-        `http://127.0.0.1:8000/api/v1/contacts/${id}/`,
-        values
-      );
+      //change this with your url
+      await axios.put(`http://127.0.0.1:8000/api/v1/contacts/${id}/`, values);
     } catch (err) {
       console.log(err);
     }
@@ -32,10 +30,8 @@ export default function ContactForm() {
   useEffect(() => {}, []);
 
   const LoginSchema = Yup.object().shape({
-    name: Yup.string().required("write your name"),
-    number: Yup.number()
-      .min(9, "Mustn't be more than 9 characters")
-      .required("Write the number"),
+    name: Yup.string().required("write the name"),
+    number: Yup.number().required("Write the number"),
   });
 
   const formik = useFormik({
@@ -48,11 +44,10 @@ export default function ContactForm() {
         if (edit === false) {
           addContact(values);
         } else {
-          editContact(id,values);
-          // console.log(id, values);
+          editContact(id, values);
         }
-      }, 500);
-      console.log(initValues);
+        setSubmitting(false);
+      }, 1000);
     },
   });
 
