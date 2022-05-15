@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Delete, Edit } from "@mui/icons-material";
 import { Card, IconButton, Tooltip } from "@mui/material";
+import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 // import { data } from "../data";
 import { ContactContext } from "../state/context";
@@ -10,16 +11,30 @@ import { ContactContext } from "../state/context";
 // };
 
 export default function Contact({ contacto }) {
-  // const { name, number } = useContext(ContactContext);
-  const { name, setName } = useContext(ContactContext);
-  const { number, setNumber } = useContext(ContactContext);
+  const { name, setName, number, setNumber, id, setId, edit, setEdit } =
+    useContext(ContactContext);
+
   const changeName = (name) => {
     setName(name);
   };
   const changeNumber = (number) => {
     setNumber(number);
   };
-  const context = useContext(ContactContext);
+  const changeEdit = () => {
+    setEdit(true);
+  };
+  const setTheContactId = (id) => {
+    setId(id);
+  };
+  const deleteContact = async (id) => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/v1/contacts/${id}/`
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const theContact = (num) => {
     return data.filter((dt) => dt.number === num);
   };
@@ -32,7 +47,11 @@ export default function Contact({ contacto }) {
           <span>{contacto.name}</span>
           <span style={{ float: "right" }}>
             <Tooltip title="Delete">
-              <IconButton>
+              <IconButton
+                onClick={() => {
+                  deleteContact(contacto.id);
+                }}
+              >
                 <Delete />
               </IconButton>
             </Tooltip>
@@ -42,6 +61,8 @@ export default function Contact({ contacto }) {
                   // theContact(contacto.number)
                   changeName(contacto.name);
                   changeNumber(contacto.number);
+                  setTheContactId(contacto.id);
+                  changeEdit();
                 }}
               >
                 <Edit />

@@ -20,8 +20,12 @@ export default function Home() {
       console.log(err);
     }
   };
+
   useEffect(() => {
-    getContacts();
+    const interval = setInterval(() => {
+      getContacts();
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -29,12 +33,12 @@ export default function Home() {
       <Container>
         <ContentStyle>
           <ContactForm />
-          <Typography variant="h2" sx={{ mt: 2, mb: 2 }}>
+          <Typography variant="h3" sx={{ mt: 2, mb: 2, textAlign: "center" }}>
             Your Contacts
           </Typography>
           {contacts &&
             contacts.map((contact) => (
-              <Contact contacto={contact} key={contact.number} />
+              <Contact contacto={contact} key={contact.id} />
             ))}
         </ContentStyle>
       </Container>

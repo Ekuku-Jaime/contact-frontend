@@ -25,13 +25,19 @@ export const ContactContextProvider = ({ children }) => {
   //   data,
   //   setData
   // }),[data,setData])
-  const [name, setName] = useState("ola");
-  const [number, setNumber] = useState(1);
+  const [name, setName] = useState();
+  const [number, setNumber] = useState();
+  const [edit, setEdit] = useState(false);
+  const [id, setId] = useState();
   const contextValue = {
     name,
     setName,
     setNumber,
     number,
+    edit,
+    setEdit,
+    id,
+    setId,
   };
   return (
     <ContactContext.Provider value={contextValue}>
