@@ -28,9 +28,7 @@ export default function Contact({ contacto }) {
   };
   const deleteContact = async (id) => {
     try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/api/v1/contacts/${id}/`
-      );
+      await axios.delete(`http://127.0.0.1:8000/api/v1/contacts/${id}/`);
     } catch (err) {
       console.log(err);
     }
